@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased bg-[#323437];
+  }
+  
+  * {
+    @apply focus:outline-none;
+  }
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+}
+
+.font-mono {
+  font-family: 'Roboto Mono', monospace;
+}
