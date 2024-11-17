@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const ENCRYPTION_KEY = '';
+const ENCRYPTION_KEY = 'dK8t#mP2$nL9q@vX5hJ3wR7yC4bN6fM1';
 const IV_LENGTH = 16;
 
 function encrypt(text) {
