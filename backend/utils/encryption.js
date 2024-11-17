@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY; // Must be 32 bytes
+const ENCRYPTION_KEY = '';
 const IV_LENGTH = 16;
 
 function encrypt(text) {
