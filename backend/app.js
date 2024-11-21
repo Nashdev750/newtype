@@ -155,7 +155,7 @@ app.get('/api/test-started/:userId', async (req, res) => {
 });
 // Updated endpoint to submit a typing test result
 app.post('/api/typing-test', async (req, res) => {
-  const { userId, wpm, accuracy, testType, timeSpent,time } = req.body;
+  const { userId,keystrokes, wpm, rawWpm, accuracy, testType, timeSpent,time } = req.body;
 
   try {
     // Verify that the test exists
@@ -169,7 +169,7 @@ app.post('/api/typing-test', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    await user.addTestResult({ wpm, accuracy, testType, timeSpent,time });
+    await user.addTestResult({ wpm, rawWpm, keystrokes, accuracy, testType, timeSpent,time });
 
     res.status(200).json({
       message: 'Test result saved successfully',
