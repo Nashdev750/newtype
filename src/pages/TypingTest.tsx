@@ -8,6 +8,7 @@ import { useTimer } from '../hooks/useTimer';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { base_url } from '../constants/utils';
+import SpeedAnalysis from '../components/SpeedAnalysis';
 
 const languages = ['english', 'french', 'german', 'spanish', 'italian'];
 const times = ['15', '30', '60', '120'];
@@ -42,7 +43,8 @@ function TypingTestPage() {
       <main className="flex-1 flex flex-col items-center w-full px-6 mt-4">
         <div className="w-full max-w-[850px] flex flex-col items-center mb-12">
           {/* Top Settings Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
+          {!isComplete &&
+            <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
             <Dropdown
               options={languages}
               value={language}
@@ -63,6 +65,8 @@ function TypingTestPage() {
               <Settings className="w-4 h-4" />
             </button> */}
           </div>
+          }
+          
 
           {showLeaderboard ? (
             <Leaderboard />

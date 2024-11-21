@@ -118,13 +118,15 @@ function Profile() {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-[#323437] rounded-xl p-6">
+        <div className="bg-[#323437] rounded-xl">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <Hash size={20} />
             Recent Tests
           </h2>
           <div className="space-y-4">
-            {profile.user?.typingStats?.recentTests.map((data, i) => (
+            {profile.user?.typingStats?.recentTests.sort((a, b) => 
+              new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
+            ).map((data, i) => (
               <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-zinc-800/50 hover:bg-zinc-800 transition-colors">
                 <div className="flex items-center gap-4">
                   <span className="text-2xl font-mono text-amber-500">{data.wpm}</span>
@@ -135,7 +137,7 @@ function Profile() {
                 </div>
                 <div className="text-right text-sm">
                   <div className="text-zinc-400">{formatDistanceToNow(new Date(data.completedAt), { addSuffix: true })}</div>
-                  <div className="text-zinc-600">raw: {data.accuracy}</div>
+                  <div className="text-zinc-600">raw: {data.rawWpm}</div>
                 </div>
               </div>
             ))}

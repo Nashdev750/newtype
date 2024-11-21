@@ -8,6 +8,9 @@ import { Footer } from './Footer';
 import axios from 'axios';
 import { base_url } from '../constants/utils';
 import { useAuth } from '../contexts/AuthContext';
+import SpeedAnalysis from './SpeedAnalysis';
+import { Header } from './Header';
+import { calculateWPM } from '../helpers/utils';
 
 interface Props {
   mode: 'time' | 'words';
@@ -35,6 +38,8 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   
   const [mistakes, setMistakes] = useState<Set<number>>(new Set());
   const [scrollOffset, setScrollOffset] = useState(0);
+  const [keystrokes, setKeystrokes] = useState<any[]>([]);
+  const [startTime, setStartTime] = useState<any>();
   
   const caretRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,6 +59,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   
   const { caretStyle } = useCaret(caretRef, isActive);
   const stats = useTypingStats(words, currentWordIndex, mistakes, timeLimit, timeLeft);
+  
 
   const resetTest = () => {
     setIsActive(false);
@@ -66,6 +72,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
       word.split('').map(char => ({ char, state: 'untyped' as const }))
     );
     setWordStates(initialStates);
+    setKeystrokes([]);
     resetTimer();
   };
 
@@ -74,7 +81,8 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
       if (!isComplete) inputRef.current?.focus();
     };
     if(isComplete){
-      handleTestComplete({ wpm:stats.wpm, accuracy:stats.accuracy, testType:'english', timeSpent:timeLimit -  timeLeft,time:timeLimit });
+      const {wpm,raw} = calculateWPM(keystrokes,timeLimit);
+      handleTestComplete({ wpm, keystrokes, rawWpm:raw, accuracy:stats.accuracy, testType:'english', timeSpent:timeLimit -  timeLeft,time:timeLimit });
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
@@ -86,10 +94,18 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isActive){
       setIsActive(true);
+      setStartTime(Date.now());
       if(profile){
         axios.get(`${base_url}/test-started/${profile?.user?.id}`);
       }
     } 
+    if (e.key.length === 1) {
+      const currentWord = words[currentWordIndex];
+      if (currentLetterIndex < currentWord.length) {
+        const isCorrect = e.key === currentWord[currentLetterIndex];
+        setKeystrokes(prev => [...prev, { timestamp: startTime ? Date.now() - startTime : Date.now(), correct: isCorrect }]);
+      }
+    }
 
     if (e.key === ' ') {
       e.preventDefault();
@@ -164,7 +180,10 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   };
 
   if (isComplete) {
-    return <Stats stats={stats} onRestart = {resetTest} />;
+    return<>
+     <SpeedAnalysis keystrokes={keystrokes} time={timeLimit}/>
+     <Footer onRestart={resetTest} />
+     </>
   }
 
   return (

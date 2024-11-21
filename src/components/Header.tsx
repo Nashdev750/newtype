@@ -8,7 +8,7 @@ interface Props {
   onLeaderboardToggle: () => void;
 }
 
-export const Header: React.FC<Props> = () => {
+export const Header: React.FC = () => {
   const {profile} = useAuth()
   const location = useLocation();
   return (

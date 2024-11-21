@@ -132,7 +132,7 @@ function ProfilePage() {
                 </div>
                 <div className="text-right text-sm">
                   <div className="text-zinc-400">{formatDistanceToNow(new Date(data.completedAt), { addSuffix: true })}</div>
-                  <div className="text-zinc-600">raw: {data.accuracy}</div>
+                  <div className="text-zinc-600">raw: {data.rawWpm}</div>
                 </div>
               </div>
             ))}

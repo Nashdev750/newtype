@@ -6,6 +6,16 @@ const testResultSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  rawWpm: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  keystrokes: {
+    type: Array,
+    required: true,
+    default: []
+  },
   accuracy: {
     type: Number,
     required: true,
@@ -113,7 +123,7 @@ userSchema.virtual('typingStats.recentTests').get(function() {
 
 // Method to add a new test result
 userSchema.methods.addTestResult = async function(testData) {
-  const { wpm, accuracy, testType, timeSpent,time } = testData;
+  const { wpm,rawWpm,keystrokes, accuracy, testType, timeSpent,time } = testData;
   
   // Update test counts and highest WPM
   this.typingStats.testsCompleted += 1;
@@ -125,6 +135,8 @@ userSchema.methods.addTestResult = async function(testData) {
   // Add new test result
   this.typingStats.testResults.push({
     wpm,
+    rawWpm,
+    keystrokes,
     accuracy,
     testType,
     time,
