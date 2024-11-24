@@ -57,7 +57,7 @@ const authMiddleware = async (req,res,next)=>{
     }).lean();
   if(!existingValidUser) return res.status(401).send()
   req.user = existingValidUser
-  req.author = {id:req.user._id,username:req.user.nickname,avatar:req.user.profileImage}
+  req.author = {id:req.user._id,username:req.user.nickname.substring(0,4)+'...',avatar:req.user.profileImage}
   next()
 }  
 
