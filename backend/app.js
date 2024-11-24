@@ -539,7 +539,7 @@ app.post('/api/posts',authMiddleware, async (req, res) => {
     const newPost = new Post({
       title,
       content,
-      author:{id:req.user._id,username:req.user.nickname,avatar:req.user.profileImage},
+      author: req.author,
       tags,
     });
 
