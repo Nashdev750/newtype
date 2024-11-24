@@ -1,0 +1,66 @@
+{
+    "author": {
+        "id": "6739cd7c0ebcc6bcf33082f2",
+        "username": "nashdev750",
+        "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLKw78qREJFynWBKugROoJb2wBzoAlSVuHuj4oOLSqMDChS=s96-c"
+    },
+    "_id": "67430034940c233e262542dc",
+    "title": "post2",
+    "content": "hello",
+    "likes": 0,
+    "tags": [],
+    "createdAt": "2024-11-24T10:30:12.748Z",
+    "comments": [
+        {
+            "author": {
+                "id": "6739cd7c0ebcc6bcf33082f2",
+                "username": "nashdev750",
+                "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLKw78qREJFynWBKugROoJb2wBzoAlSVuHuj4oOLSqMDChS=s96-c"
+            },
+            "content": "test2",
+            "createdAt": "2024-11-24T10:31:31.918Z",
+            "likes": 0,
+            "replies": [
+                {
+                    "_id": "674300ac71b3901a90f49564",
+                    "content": "hi",
+                    "author": {
+                        "id": "6739cd7c0ebcc6bcf33082f2",
+                        "username": "nashdev750",
+                        "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLKw78qREJFynWBKugROoJb2wBzoAlSVuHuj4oOLSqMDChS=s96-c"
+                    },
+                    "likes": 0,
+                    "createdAt": "2024-11-24T10:32:12.133Z",
+                    "replies": []
+                },
+                {
+                    "_id": "674303da94c6ad569fdd43c3",
+                    "content": "hol",
+                    "author": {
+                        "id": "6739cd7c0ebcc6bcf33082f2",
+                        "username": "nashdev750",
+                        "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLKw78qREJFynWBKugROoJb2wBzoAlSVuHuj4oOLSqMDChS=s96-c"
+                    },
+                    "likes": 0,
+                    "createdAt": "2024-11-24T10:45:46.354Z",
+                    "replies": [
+                        {
+                            "_id": "674306d91f2b5de7f40da102",
+                            "content": "rre",
+                            "author": {
+                                "id": "6739cd7c0ebcc6bcf33082f2",
+                                "username": "nashdev750",
+                                "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLKw78qREJFynWBKugROoJb2wBzoAlSVuHuj4oOLSqMDChS=s96-c"
+                            },
+                            "likes": 0,
+                            "createdAt": "2024-11-24T10:58:33.521Z",
+                            "replies": []
+                        }
+                    ]
+                }
+            ],
+            "_id": "6743008371b3901a90f49556"
+        }
+    ],
+    "__v": 3
+}

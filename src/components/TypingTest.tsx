@@ -44,7 +44,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   const caretRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const wordsContainerRef = useRef<HTMLDivElement>(null);
-  const words = useWords(50, language);
+  const words = useWords(1000, language);
   const { profile } = useAuth();
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
     };
     if(isComplete){
       const {wpm,raw} = calculateWPM(keystrokes,timeLimit);
-      handleTestComplete({ wpm, keystrokes, rawWpm:raw, accuracy:stats.accuracy, testType:'english', timeSpent:timeLimit -  timeLeft,time:timeLimit });
+      handleTestComplete({ wpm, keystrokes, rawWpm:raw, accuracy:stats.accuracy, testType:language, timeSpent:timeLimit -  timeLeft,time:timeLimit });
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
@@ -189,7 +189,10 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   return (
     <>
     
-    <div className="w-full max-w-[850px] relative" onClick={() => inputRef.current?.focus()}>
+    <div className="w-full max-w-[850px] relative" onClick={(e:any) =>{
+          // e.preventDefault(); 
+          inputRef.current?.focus()
+    }}>
       <Timer timeLeft={timeLeft} />
       
       <input
@@ -205,8 +208,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
           ref={caretRef}
           className="absolute w-0.5 h-[2.4rem] bg-[#e2b714] transition-all duration-100 animate-pulse z-10"
           style={{
-            ...caretStyle,
-            // top: '2.4rem', // Fixed position in the middle row
+            ...caretStyle
           }}
         />
         

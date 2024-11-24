@@ -3,6 +3,7 @@ import LeaderboardPage from './pages/Leaderboard';
 import TypingTestPage from './pages/TypingTest';
 import Account from './pages/Account';
 import ProfilePage from './pages/Profile';
+import Thread from './pages/Thread';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/account" element={<Account/>} />
           <Route path="/profile/:account" element={<ProfilePage/>} />
+          <Route path="/community/thread" element={<Thread/>} />
         </Routes>
       </BrowserRouter>
   );

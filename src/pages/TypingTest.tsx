@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Command, Timer, Keyboard, Settings } from 'lucide-react';
+import { Command, Timer, Keyboard, Settings, Globe } from 'lucide-react';
 import { TypingTest } from '../components/TypingTest';
 import { Header } from '../components/Header';
 import { Dropdown } from '../components/Dropdown';
@@ -7,8 +7,9 @@ import { Leaderboard } from '../components/Leaderboard';
 import { useTimer } from '../hooks/useTimer';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
-import { base_url } from '../constants/utils';
+import { base_url, challenges } from '../constants/utils';
 import SpeedAnalysis from '../components/SpeedAnalysis';
+import { LanguageSelect } from '../components/LanguageSelect';
 
 const languages = ['english', 'french', 'german', 'spanish', 'italian'];
 const times = ['15', '30', '60', '120'];
@@ -45,11 +46,11 @@ function TypingTestPage() {
           {/* Top Settings Bar */}
           {!isComplete &&
             <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
-            <Dropdown
-              options={languages}
-              value={language}
-              onChange={setLanguage}
-              icon={<Command className="w-4 h-4" />}
+            <LanguageSelect
+            options={challenges}
+            value={language}
+            onChange={setLanguage}
+            icon={<Globe className="w-4 h-4" />}
             />
             <Dropdown
               options={times}

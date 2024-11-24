@@ -20,3 +20,8 @@
 .font-mono {
   font-family: 'Roboto Mono', monospace;
 }
+
+.scrollbar-none::-webkit-scrollbar{
+  display: none;
+
+}

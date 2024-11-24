@@ -1,3 +1,6 @@
+import axios from "axios";
+import { base_url } from "../constants/utils";
+
 export interface KeyStrokeData {
     timestamp: number;
     correct: boolean;
@@ -22,3 +25,18 @@ export interface KeyStrokeData {
       raw: rawWPM
     };
   };
+
+
+  export const http = axios.create({
+    baseURL: base_url
+  })
+  http.interceptors.request.use(config => {
+    const userjson = localStorage.getItem('user'); // Retrieve user from local storage
+    if (userjson) {
+        const { user } = JSON.parse(userjson); // Parse user JSON to get the token
+        config.headers.Authorization = `Bearer ${user.lastToken}`; // Set the authorization header
+    }
+    return config;
+}, error => {
+    return Promise.reject(error);
+});

@@ -6,17 +6,14 @@ interface User {
   // Add other user properties as needed
 }
 
-interface AuthContextType {
-  profile: any;
-  isLoading: boolean;
-  setProfile: (user: any | null) => void;
-}
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<any | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showComments, setShowComments] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
 
   useEffect(() => {
     // Check localStorage for existing user data
@@ -29,6 +26,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value = {
     profile,
+    showComments,
+    setShowComments,
+    showReplies,
+    setShowReplies,
     isLoading,
     setIsLoading,
     setProfile: (newUser: User | null) => {
