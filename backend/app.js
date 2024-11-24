@@ -114,6 +114,7 @@ if(!credential){
         audience: process.env.GOOGLE_CLIENT_ID,
       });  
     } catch (error) {
+      console.log(error)
       return res.status(401).json({ message: 'Unauthorized' });
     }
   
