@@ -19,8 +19,8 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the 'assets' directory
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+// Serve static files from the 'profile' directory
+app.use('/profile', express.static(path.join(__dirname, 'profile')));
 
 // Swagger definition
 const swaggerOptions = {
@@ -127,7 +127,7 @@ if(!credential){
 
     if (!user) {
       // Create new user
-      const imagePath = `assets/${googleId}.jpg`; // Define the path for the image
+      const imagePath = `profile/${googleId}.jpg`; // Define the path for the image
       await downloadImage(picture, imagePath); // Function to download the image
       user = new User({
         email,
@@ -138,7 +138,7 @@ if(!credential){
         nickname: email.split('@')[0]
       });
     } else {
-      const imagePath = `assets/${googleId}.jpg`; // Define the path for the image
+      const imagePath = `profile/${googleId}.jpg`; // Define the path for the image
       await downloadImage(picture, imagePath); //
       // Update existing user's token info
       user.lastToken = credential;
