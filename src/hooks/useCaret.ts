@@ -2,7 +2,8 @@ import { useEffect, useState, RefObject } from 'react';
 
 export const useCaret = (
   caretRef: RefObject<HTMLDivElement>,
-  isActive: boolean
+  isActive: boolean,
+  shaffleWords: boolean
 ) => {
   const [caretStyle, setCaretStyle] = useState({
     left: '0px',
@@ -49,7 +50,7 @@ export const useCaret = (
       window.removeEventListener('resize', updateCaret);
       clearInterval(interval);
     };
-  }, [isActive]);
+  }, [isActive,shaffleWords]);
 
   return { caretStyle };
 };

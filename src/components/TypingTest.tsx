@@ -58,7 +58,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
  
 
   
-  const { caretStyle } = useCaret(caretRef, isActive);
+  const { caretStyle } = useCaret(caretRef, isActive, shaffleWords);
   const stats = useTypingStats(words, currentWordIndex, mistakes, timeLimit, timeLeft);
   
 
