@@ -40,11 +40,12 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
   const [scrollOffset, setScrollOffset] = useState(0);
   const [keystrokes, setKeystrokes] = useState<any[]>([]);
   const [startTime, setStartTime] = useState<any>();
+  const [shaffleWords,setShaffleWords] = useState(false)
   
   const caretRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const wordsContainerRef = useRef<HTMLDivElement>(null);
-  const words = useWords(1000, language);
+  let words = useWords(500, language,shaffleWords);
   const { profile } = useAuth();
 
   useEffect(() => {
@@ -74,6 +75,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
     setWordStates(initialStates);
     setKeystrokes([]);
     resetTimer();
+    setShaffleWords(!shaffleWords)
   };
 
   useEffect(() => {
