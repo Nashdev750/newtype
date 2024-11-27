@@ -1116,6 +1116,26 @@ app.get('/api/posts/top', async (req, res) => {
  *         description: Error fetching top posts
  */
 
+
+app.get('/api/sitemap', (req, res) => {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://monkeytype.live/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://monkeytype.live/leaderboard</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>`;
+
+  res.header('Content-Type', 'application/xml'); // Set the content type to XML
+  res.send(sitemap); // Send the sitemap as the response
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
