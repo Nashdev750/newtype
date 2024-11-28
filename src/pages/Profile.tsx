@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { base_url, formatTimeSpent } from '../constants/utils';
 import { Header } from '../components/Header';
+import {Helmet} from 'react-helmet'
+
 
 function StatCard({ icon: Icon, label, value, subValue }: { icon: React.ElementType; label: string; value: string; subValue?: string }) {
   return (
@@ -48,6 +50,10 @@ function ProfilePage() {
   }
   return (
     <div className="min-h-screen bg-[#323437] text-[#fff] p-4 md:p-8">
+          <Helmet>
+                <title>Profile | Monkeytype</title>
+                <link rel="canonical" href="https://monkeytype.live/profile" />
+          </Helmet>
       <Header/>
       <div className="max-w-[850px] mx-auto mt-4">
         {/* Profile Header */}

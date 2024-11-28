@@ -16,6 +16,7 @@ import { FAQSection } from '../components/FAQSection';
 import { MonkeyTypeComparison } from '../components/MonkeyTypeComparison';
 import { TypingResources } from '../components/TypingResources';
 import { PracticeGuide } from '../components/PracticeGuide';
+import { Helmet } from 'react-helmet';
 
 
 const languages = ['english', 'french', 'german', 'spanish', 'italian'];
@@ -46,6 +47,9 @@ function TypingTestPage() {
 
   return (
     <div className="min-h-screen bg-[#323437] text-[#646669] flex flex-col">
+      <Helmet>
+            <link rel="canonical" href="https://monkeytype.live/" />
+      </Helmet>
       <Header/>
       
       <main className="flex-1 flex flex-col items-center w-full px-6 mt-4">
