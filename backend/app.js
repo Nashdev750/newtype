@@ -298,11 +298,6 @@ app.post('/api/typing-test', async (req, res) => {
 
   try {
     // Verify that the test exists
-    const test = await Test.findOne({ testType });
-    if (!test) {
-      return res.status(404).json({ message: 'Test type not found' });
-    }
-
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
