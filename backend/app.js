@@ -12,6 +12,7 @@ const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 const fs = require('fs');
 const { default: axios } = require('axios');
+const GlobalStats = require('./models/GlobalStats');
 
 const app = express();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -281,6 +282,15 @@ app.get('/api/tests/:testType', async (req, res) => {
 
 app.get('/api/test-started/:userId', async (req, res) => {
   try {
+    await GlobalStats.findOneAndUpdate(
+      {},
+      {
+        $inc: {
+          totalTestsStarted: 1
+        }
+      },
+      { upsert: true }
+    );
     const user = await User.findById(req.params.userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -297,6 +307,16 @@ app.post('/api/typing-test', async (req, res) => {
   const { userId,keystrokes, wpm, rawWpm, accuracy, testType, timeSpent,time } = req.body;
 
   try {
+    await GlobalStats.findOneAndUpdate(
+      {},
+      {
+        $inc: {
+          totalTestsTaken: 1,
+          totalTypingTime: timeSpent
+        }
+      },
+      { upsert: true }
+    );
     // Verify that the test exists
     const user = await User.findById(userId);
     if (!user) {
