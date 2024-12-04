@@ -11,7 +11,7 @@ function App() {
   const {profile} = useAuth()
   return (
     <>
-      {profile &&
+      {!profile &&
       <LoginReminder/>
       
       }
