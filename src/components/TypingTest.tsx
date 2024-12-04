@@ -97,9 +97,7 @@ export const TypingTest = React.memo(function TypingTest({ mode, timeLimit, lang
     if (!isActive){
       setIsActive(true);
       setStartTime(Date.now());
-      if(profile){
-        axios.get(`${base_url}/test-started/${profile?.user?.id}`);
-      }
+      axios.get(`${base_url}/test-started/${profile?.user?.id}`);
     } 
     if (e.key.length === 1) {
       const currentWord = words[currentWordIndex];

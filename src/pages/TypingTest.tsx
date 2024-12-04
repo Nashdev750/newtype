@@ -33,9 +33,9 @@ function TypingTestPage() {
 
   const handleTestComplete = (data) => {
     setIsActive(false);
-    if(profile){
+
       axios.post(`${base_url}/typing-test`, { userId:profile?.user?.id, time, ...data })
-    }
+    
    
   };
 
