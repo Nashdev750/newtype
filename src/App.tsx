@@ -4,9 +4,17 @@ import TypingTestPage from './pages/TypingTest';
 import Account from './pages/Account';
 import ProfilePage from './pages/Profile';
 import Thread from './pages/Thread';
+import { useAuth } from './contexts/AuthContext';
+import { LoginReminder } from './components/LoginReminder';
 
 function App() {
+  const {profile} = useAuth()
   return (
+    <>
+      {profile &&
+      <LoginReminder/>
+      
+      }
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TypingTestPage />} />
@@ -16,6 +24,7 @@ function App() {
           <Route path="/community/thread" element={<Thread/>} />
         </Routes>
       </BrowserRouter>
+    </>
   );
 }
 
