@@ -19,7 +19,7 @@ function Thread() {
     },[])
   return (
     <>
-      <Helmet>
+          <Helmet>
                 <title>Community Thread | Monkeytype</title>
                 <link rel="canonical" href="https://monkeytype.live/community/thread" />
           </Helmet>
