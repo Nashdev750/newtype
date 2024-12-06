@@ -3,11 +3,10 @@ import { questions } from '../constants/questions';
 import { QuestionItem } from '../components/QuestionItem';
 import { ScoreDisplay } from '../components/ScoreDisplay';
 import { BlogSection } from '../components/BlogSection';
-import { Layout } from '../components/Layout';
 import { FloatingScore } from '../components/FloatingScore';
 import {Helmet} from 'react-helmet'
 
-function RicePurityTest() {
+function RicePuritySub() {
   const [checkedQuestions, setCheckedQuestions] = useState<boolean[]>(new Array(questions.length).fill(false));
   const [showResults, setShowResults] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
@@ -31,30 +30,34 @@ function RicePurityTest() {
     topRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  const handleLoad = () => {
-    if (iframeRef.current) {
-      iframeRef.current.style.height = `${iframeRef.current.contentWindow?.document.body.scrollHeight}px`;
-    }
-  };
-
   return (
-    <Layout>
+    <>
        <Helmet>
 
                 <title>Rice Purity Test</title>
                 <meta name="description" content="The rice purity test is a hundred question tests and it defines your purity and innocence, based on questions."/>
                 <meta name="keywords" content="Purity, Purity Test, Rice Purity, Rice Purity Test,"/>
-                <link rel="canonical" href="https://monkeytype.live/rice-purity-test" />
         </Helmet>
-      
+      <div ref={topRef}>
+        {showResults && (
+          <div className="mb-12">
+            <ScoreDisplay score={calculateScore()} />
+          </div>
+        )}
+      </div>
      
       <div className="grid gap-4 mb-16">
-       <iframe  ref={iframeRef} height={400} width='100%' src='/rice-purity'/>
+        {questions.map((question, index) => (
+          <QuestionItem
+            key={index}
+            question={question}
+            index={index}
+            isChecked={checkedQuestions[index]}
+            onChange={handleQuestionChange}
+          />
+        ))}
       </div>
 
-      <BlogSection />
 
       {showResults && (
         <FloatingScore 
@@ -62,8 +65,8 @@ function RicePurityTest() {
           onScrollToTop={scrollToTop}
         />
       )}
-    </Layout>
+    </>
   );
 }
 
-export default RicePurityTest;
+export default RicePuritySub;
