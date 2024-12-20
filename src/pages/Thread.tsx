@@ -20,7 +20,7 @@ function Thread() {
   return (
     <>
           <Helmet>
-                <title>Community Thread | Monkeytype</title>
+                <title>Monkeytype | Community Thread</title>
                 <link rel="canonical" href="https://monkeytype.live/community/thread" />
           </Helmet>
     <div className="min-h-screen bg-[#232323] text-white p-4 md:p-8">

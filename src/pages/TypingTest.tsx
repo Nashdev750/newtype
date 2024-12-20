@@ -48,6 +48,7 @@ function TypingTestPage() {
   return (
     <div className="min-h-screen bg-[#323437] text-[#646669] flex flex-col">
       <Helmet>
+            <title>Monkeytype | Customizable Typing Tests</title>
             <link rel="canonical" href="https://monkeytype.live/" />
       </Helmet>
       <Header/>

@@ -20,7 +20,7 @@ export default function LeaderboardPage() {
   return (
     <div className="min-h-screen bg-[#323437] text-[#646669] flex flex-col">
          <Helmet>
-                <title>Leaderborad | Monkeytype</title>
+                <title>Monkeytype | Leaderborad</title>
                 <link rel="canonical" href="https://monkeytype.live/leaderboard" />
           </Helmet>
       <Header />

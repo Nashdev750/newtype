@@ -40,7 +40,7 @@ function Profile() {
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
             <span className="text-2xl font-bold">
             <img 
-                src={profile.user.profileImage} 
+                src={profile.user.profileImage.replace("profile/","")} 
                 alt={`${profile.user.nickname}'s avatar`}
                 className="object-cover w-20 h-20 rounded-full"
               />

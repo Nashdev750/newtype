@@ -51,7 +51,7 @@ function ProfilePage() {
   return (
     <div className="min-h-screen bg-[#323437] text-[#fff] p-4 md:p-8">
           <Helmet>
-                <title>Profile | Monkeytype</title>
+                <title>Monkeytype | Profile</title>
                 <link rel="canonical" href="https://monkeytype.live/profile" />
           </Helmet>
       <Header/>
@@ -62,7 +62,7 @@ function ProfilePage() {
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
             <span className="text-2xl font-bold">
             <img 
-                src={profile.user.profileImage} 
+                src={profile.user.profileImage.replace("profile/","")} 
                 alt={`${profile.user.nickname}'s avatar`}
                 className="object-cover w-20 h-20 rounded-full"
               />

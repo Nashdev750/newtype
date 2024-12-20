@@ -51,7 +51,7 @@ return (
     <div className="min-h-screen bg-[#323437] text-[#646669] flex flex-col">
         
          <Helmet>
-                <title>Account | Monkeytype</title>
+                <title>Monkeytype | Account</title>
                 <link rel="canonical" href="https://monkeytype.live/account" />
           </Helmet>
     <Header/>
