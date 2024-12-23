@@ -63,7 +63,7 @@ const authMiddleware = async (req,res,next)=>{
   next()
 }  
 
-app.get('/api/contact',async (req, res)=>{
+app.post('/api/contact',async (req, res)=>{
    await Message.create(req.body)
    res.send({success: true})
 })
