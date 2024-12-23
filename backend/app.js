@@ -13,6 +13,7 @@ const path = require('path');
 const fs = require('fs');
 const { default: axios } = require('axios');
 const GlobalStats = require('./models/GlobalStats');
+const Message = require('./models/Message');
 
 const app = express();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -61,6 +62,11 @@ const authMiddleware = async (req,res,next)=>{
   req.author = {id:req.user._id,username:req.user.nickname.substring(0,4)+'...',avatar:req.user.profileImage}
   next()
 }  
+
+app.get('/api/contact',async (req, res)=>{
+   await Message.create(req.body)
+   res.send({success: true})
+})
 
 /**
  * @swagger

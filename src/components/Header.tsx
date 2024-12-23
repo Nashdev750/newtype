@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, BarChart2, Keyboard, MessageSquare } from 'lucide-react';
+import { User, BarChart2, Keyboard, MessageSquare, BookOpen, Contact, Phone } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -27,7 +27,17 @@ export const Header: React.FC = () => {
           <Link to="/community/thread" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2
             ${location.pathname == '/community/thread'?'text-[#e2b714]':''}`}>
           <MessageSquare className="w-4 h-4" />
-          Community
+          Thread
+          </Link>
+          <Link to="/terms" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2
+            ${location.pathname == '/terms'?'text-[#e2b714]':''}`}>
+          <BookOpen className="w-4 h-4"/>
+          Terms
+          </Link>
+          <Link to="/contact" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2
+            ${location.pathname == '/contact'?'text-[#e2b714]':''}`}>
+          <Phone className="w-4 h-4"/>
+          Contact Us
           </Link>
         </div>
      <Link to="/account" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2

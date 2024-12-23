@@ -6,8 +6,8 @@ import ProfilePage from './pages/Profile';
 import Thread from './pages/Thread';
 import { useAuth } from './contexts/AuthContext';
 import { LoginReminder } from './components/LoginReminder';
-import RicePurityTest from './pages/RicePurityTest';
-import RicePuritySub from './pages/RicePuritySub';
+import { Terms } from './pages/Terms';
+import { Contact } from './pages/Contact';
 
 function App() {
   const {profile} = useAuth()
@@ -24,8 +24,9 @@ function App() {
           <Route path="/account" element={<Account/>} />
           <Route path="/profile/:account" element={<ProfilePage/>} />
           <Route path="/community/thread" element={<Thread/>} />
-          <Route path="/rice-purity-test" element={<RicePurityTest/>} />
-          <Route path="/rice-purity" element={<RicePuritySub/>} />
+          <Route path="/terms" element={<Terms/>} />
+          <Route path="/contact" element={<Contact/>} />
+
         </Routes>
       </BrowserRouter>
     </>
