@@ -29,8 +29,8 @@ export const Header: React.FC = () => {
           <MessageSquare className="w-4 h-4" />
           Thread
           </Link>
-          <Link to="/terms" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2
-            ${location.pathname == '/terms'?'text-[#e2b714]':''}`}>
+          <Link to="/privacy-policy" className={`hover:text-[#d1d0c5] transition-colors flex items-center gap-2
+            ${location.pathname == '/privacy-policy'?'text-[#e2b714]':''}`}>
           <BookOpen className="w-4 h-4"/>
           Terms
           </Link>

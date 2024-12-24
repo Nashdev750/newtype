@@ -24,7 +24,7 @@ function App() {
           <Route path="/account" element={<Account/>} />
           <Route path="/profile/:account" element={<ProfilePage/>} />
           <Route path="/community/thread" element={<Thread/>} />
-          <Route path="/terms" element={<Terms/>} />
+          <Route path="/privacy-policy" element={<Terms/>} />
           <Route path="/contact" element={<Contact/>} />
 
         </Routes>
