@@ -309,10 +309,41 @@ app.get('/api/test-started/:userId', async (req, res) => {
   }
 });
 // Updated endpoint to submit a typing test result
-app.post('/api/typing-test', async (req, res) => {
-  const { userId,keystrokes, wpm, rawWpm, accuracy, testType, timeSpent,time } = req.body;
+const calculateWPM = (
+  keystrokes,
+  timeInSeconds
+) => {
+  const timeInMinutes = timeInSeconds / 60;
+  
+  const totalKeystrokes = keystrokes.length;
+  const rawWPM = Math.round((totalKeystrokes / 5) / timeInMinutes);
+  
+  const correctKeystrokes = keystrokes.filter(k => k.correct).length;
+  const netWPM = Math.round((correctKeystrokes / 5) / timeInMinutes);
+  
+  return {
+    wpm: netWPM,
+    raw: rawWPM
+  };
+};
+const validateTest = (keystrokes, time)=>{
+  const totalTimeMs = keystrokes[keystrokes.length - 1].timestamp; 
+  const totalTimeSec = totalTimeMs / 1000;  
 
+  
+  const within = (a, b, tolerance = 1) => Math.abs(a - b) <= tolerance;
+  const isTimeValid = within(time, Math.round(totalTimeSec), 2); 
+
+  return isTimeValid;
+}
+app.post('/api/typing-test', async (req, res) => {
+  const { userId, keystrokes, wpm, rawWpm, accuracy, testType, timeSpent,time } = req.body;
+  
   try {
+    const stats = calculateWPM(keystrokes,time)
+    if(Math.abs(stats.wpm - wpm) > 2 || Math.abs(stats.raw - rawWpm) > 2 || !validateTest(keystrokes,time)){
+      res.status(500).json({ message: 'Error saving test result' });
+    }
     await GlobalStats.findOneAndUpdate(
       {},
       {
@@ -329,7 +360,7 @@ app.post('/api/typing-test', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    await user.addTestResult({ wpm, rawWpm, keystrokes, accuracy, testType, timeSpent,time });
+    await user.addTestResult({ wpm: stats.wpm, rawWpm: stats.raw, keystrokes, accuracy, testType, timeSpent,time });
 
     res.status(200).json({
       message: 'Test result saved successfully',
