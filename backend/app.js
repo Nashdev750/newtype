@@ -509,7 +509,7 @@ app.get('/api/leaderboard', async (req, res) => {
       username: user.nickname.substring(0, 5),
       wpm: user.typingStats.highestWpmRecord.wpm,
       accuracy: user.typingStats.highestWpmRecord.accuracy,
-      keystrokes: user.typingStats.keystrokes,
+      keystrokes: user.typingStats.highestWpmRecord.keystrokes,
       publicId: encrypt(user.nickname)
     }));
 
