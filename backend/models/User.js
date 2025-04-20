@@ -93,7 +93,8 @@ const userSchema = new mongoose.Schema({
     highestWpmRecord: {
       wpm: { type: Number, default: 0 },
       accuracy: { type: Number, default: 0 },
-      time: { type: Number, default: 0 }
+      time: { type: Number, default: 0 },
+      keystrokes: { type: Array, default: [] }
     }
   }
 });
@@ -149,7 +150,7 @@ userSchema.methods.addTestResult = async function(testData) {
   }
 
   if (!this.typingStats.highestWpmRecord || wpm > this.typingStats.highestWpmRecord.wpm) {
-    this.typingStats.highestWpmRecord = { wpm, accuracy,time };
+    this.typingStats.highestWpmRecord = { wpm, accuracy,time, keystrokes };
   }
 
   return this.save();
