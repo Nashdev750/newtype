@@ -1232,30 +1232,47 @@ app.get('api/blog/:slug', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+function slugify(title) {
+  return title
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[\s\W-]+/g, '-')  // Replace spaces and non-word chars with hyphens
+    .replace(/^-+|-+$/g, '');   // Remove leading/trailing hyphens
+}
 
 app.post('/api/blog', async (req, res) => {
   try {
-    const newPost = new BlogPost(req.body);
+    const slug = slugify(req.body.title || '');
+    const newPost = new BlogPost({ ...req.body, slug });
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-})
+});
+
 
 app.put('/api/blog/:id', async (req, res) => {
   try {
+    const updates = { ...req.body };
+    if (req.body.title) {
+      updates.slug = slugify(req.body.title);
+    }
+
     const updatedPost = await BlogPost.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updates,
       { new: true }
     );
+
     if (!updatedPost) return res.status(404).json({ error: 'Post not found' });
     res.json(updatedPost);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 app.delete('/api/blog/:id', async (req, res) => {
   try {
