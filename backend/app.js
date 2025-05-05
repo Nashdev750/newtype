@@ -14,6 +14,7 @@ const fs = require('fs');
 const { default: axios } = require('axios');
 const GlobalStats = require('./models/GlobalStats');
 const Message = require('./models/Message');
+const BlogPost = require('./models/BlogPost');
 
 const app = express();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -1187,6 +1188,73 @@ app.get('/api/sitemap', (req, res) => {
 
   res.header('Content-Type', 'application/xml'); // Set the content type to XML
   res.send(sitemap); // Send the sitemap as the response
+});
+
+//blog post
+app.get('/api/blog', async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+
+    const posts = await BlogPost.find()
+      .select('-content') // Exclude HTML content
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .sort({ createdAt: -1 });
+    const total = await BlogPost.countDocuments();
+
+    res.json({
+      total,
+      page: parseInt(page),
+      pageSize: posts.length,
+      posts
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('api/blog/:id', async (req, res) => {
+  try {
+    const post = await BlogPost.findById(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/blog', async (req, res) => {
+  try {
+    const newPost = new BlogPost(req.body);
+    const savedPost = await newPost.save();
+    res.status(201).json(savedPost);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+})
+
+app.put('/api/blog/:id', async (req, res) => {
+  try {
+    const updatedPost = await BlogPost.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedPost) return res.status(404).json({ error: 'Post not found' });
+    res.json(updatedPost);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.delete('/api/blog/:id', async (req, res) => {
+  try {
+    const deletedPost = await BlogPost.findByIdAndDelete(req.params.id);
+    if (!deletedPost) return res.status(404).json({ error: 'Post not found' });
+    res.json(deletedPost);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 const PORT = process.env.PORT || 4000;
