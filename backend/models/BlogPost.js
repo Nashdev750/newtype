@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const BlogPostSchema = new mongoose.Schema({
-  title: String,
+  title: {type:String, unique: true},
   content: String,
   excerpt: String,
   author: String,
   date: String,
-  slug: String,
+  slug: {type:String, unique: true},
   tags: [String],
   category: String,
   featured: Boolean,

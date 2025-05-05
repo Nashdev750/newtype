@@ -1213,9 +1213,19 @@ app.get('/api/blog', async (req, res) => {
   }
 });
 
-app.get('api/blog/:id', async (req, res) => {
+// app.get('api/blog/:id', async (req, res) => {
+//   try {
+//     const post = await BlogPost.findById(req.params.id);
+//     if (!post) return res.status(404).json({ error: 'Post not found' });
+//     res.json(post);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+app.get('api/blog/:slug', async (req, res) => {
   try {
-    const post = await BlogPost.findById(req.params.id);
+    const post = await BlogPost.findOne({slug:req.params.slug});
     if (!post) return res.status(404).json({ error: 'Post not found' });
     res.json(post);
   } catch (err) {
