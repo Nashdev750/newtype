@@ -1240,7 +1240,7 @@ app.get('/api/blog', async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
 
-    const posts = await BlogPost.find()
+    const posts = await BlogPost.find({published: true})
       .select('-content') // Exclude HTML content
       .skip((page - 1) * limit)
       .limit(parseInt(limit))
@@ -1270,7 +1270,7 @@ app.get('/api/blog', async (req, res) => {
 
 app.get('/api/blog/:slug', async (req, res) => {
   try {
-    const post = await BlogPost.findOne({slug:req.params.slug});
+    const post = await BlogPost.findOne({slug:req.params.slug, published: true});
     if (!post) return res.status(404).json({ error: 'Post not found' });
     res.json(post);
   } catch (err) {
@@ -1289,6 +1289,7 @@ function slugify(title) {
 app.post('/api/blog', async (req, res) => {
   try {
     const slug = slugify(req.body.title || '');
+    req.body.published = false
     const newPost = new BlogPost({ ...req.body, slug });
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
