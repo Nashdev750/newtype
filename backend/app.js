@@ -89,17 +89,24 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  res.json({ success:1, file:{url: 'https://www.monkeytype.live/api/api/image/'+req.file.filename } });
+  res.json({ success:1, file:{url: 'https://www.monkeytype.live/api/image/'+req.file.filename } });
 });
 
 // === Image Fetch Endpoint ===
 app.get('/api/image/:name', (req, res) => {
-  const imagePath = path.join(__dirname, 'uploads', req.params.name);
-  if (fs.existsSync(imagePath)) {
-    res.sendFile(imagePath);
-  } else {
-    res.status(404).json({ error: 'Image not found' });
+  const imageName = req.params.name;
+  const imagePath = path.join(__dirname, 'uploads', imageName);
+
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).json({ error: 'Image not found' });
   }
+
+  res.sendFile(imagePath, {
+    headers: {
+      'Content-Disposition': `inline; filename="${imageName}"`,
+      'Cache-Control': 'public, max-age=31536000', // Optional caching
+    }
+  });
 });
 
 app.post('/api/contact',async (req, res)=>{
