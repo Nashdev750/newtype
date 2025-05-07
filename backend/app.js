@@ -89,7 +89,7 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  res.json({ filename: req.file.filename });
+  res.json({ success:1, file:{url: 'https://www.monkeytype.live/api/api/image/'+req.file.filename } });
 });
 
 // === Image Fetch Endpoint ===
