@@ -15,12 +15,14 @@ const { default: axios } = require('axios');
 const GlobalStats = require('./models/GlobalStats');
 const Message = require('./models/Message');
 const BlogPost = require('./models/BlogPost');
+const multer = require('multer');
 
 const app = express();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 app.use(cors());
 app.use(express.json());
+
 
 // Serve static files from the 'profile' directory
 app.use('/profile', express.static(path.join(__dirname, 'profile')));
@@ -63,6 +65,42 @@ const authMiddleware = async (req,res,next)=>{
   req.author = {id:req.user._id,username:req.user.nickname.substring(0,4)+'...',avatar:req.user.profileImage}
   next()
 }  
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath);
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+
+const upload = multer({ storage: storage });
+
+// === Image Upload Endpoint ===
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  res.json({ filename: req.file.filename });
+});
+
+// === Image Fetch Endpoint ===
+app.get('/api/image/:name', (req, res) => {
+  const imagePath = path.join(__dirname, 'uploads', req.params.name);
+  if (fs.existsSync(imagePath)) {
+    res.sendFile(imagePath);
+  } else {
+    res.status(404).json({ error: 'Image not found' });
+  }
+});
 
 app.post('/api/contact',async (req, res)=>{
    await Message.create(req.body)
